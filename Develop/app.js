@@ -14,14 +14,106 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-function promptUser(){
+function addEmployee() {
     return inquirer.prompt([
         {
-            
+            type: "list",
+            name: "role",
+            message: "Please select the role the employee you are entering holds.",
+            choices: ["Manager",
+                "Intern",
+                "Engineer"],
+
+        }
+    ]).then(selectedRole => {
+        if (selectedRole === Manager) {
+            newManager();
+        }
+        else if (selectedRole === Engineer) {
+            newEngineer();
+        }
+        else if (selectedRole === Intern) {
+            newIntern();
+        }
+
+    })
+};
+
+function newEngineer() {
+    return inquirer.prompt([
+
+        {
+            type: "input",
+            name: "name",
+            message: "Please enter the name of your engineer?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Please enter the engineer's ID number"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter the engineer's email address."
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "Please enter the engineer's github username."
         }
     ])
-}
+};
 
+function newIntern() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Please enter the name of your intern?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Please enter the intern's ID number"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter the intern's email address."
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "Please enter the intern's school name."
+        }
+    ])
+};
+
+function newManager() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Please enter the Manager's name."
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Please enter the Manager's ID number"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter the Manager's email address."
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "Please enter the manager's office number."
+        }
+    ])
+};
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
