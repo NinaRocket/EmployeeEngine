@@ -10,7 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
+//array to push added employees into
+const employeeArr = [];
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -22,18 +23,21 @@ function addEmployee() {
             message: "Please select the role the employee you are entering holds.",
             choices: ["Manager",
                 "Intern",
-                "Engineer"],
+                "Engineer", "None"],
 
         }
     ]).then(selectedRole => {
-        if (selectedRole === Manager) {
+        if (selectedRole.role === "Manager") {
             newManager();
         }
-        else if (selectedRole === Engineer) {
+        else if (selectedRole.role === "Engineer") {
             newEngineer();
         }
-        else if (selectedRole === Intern) {
+        else if (selectedRole.role === "Intern") {
             newIntern();
+        }
+        else {
+            console.log("No employee added.");
         }
 
     })
@@ -62,7 +66,12 @@ function newEngineer() {
             name: "github",
             message: "Please enter the engineer's github username."
         }
-    ])
+    ]).then(data => {
+        console.log("An engineer was added.");
+        let engineer = new Engineer(data.name, data.id, data.email, data.github);
+        employeeArr.push(engineer);
+        addEmployee();
+    })
 };
 
 function newIntern() {
@@ -87,7 +96,12 @@ function newIntern() {
             name: "school",
             message: "Please enter the intern's school name."
         }
-    ])
+    ]).then(data => {
+        console.log("An intern was added.");
+        let intern = new Intern(data.name, data.id, data.email, data.school);
+        employeeArr.push(intern);
+        addEmployee();
+    })
 };
 
 function newManager() {
@@ -112,8 +126,16 @@ function newManager() {
             name: "officeNumber",
             message: "Please enter the manager's office number."
         }
-    ])
+    ]).then(data => {
+        console.log("A manager was added.");
+        let manager = new Manager(data.name, data.id, data.email, data.officeNumber);
+        employeeArr.push(manager);
+        addEmployee();
+    })
 };
+
+addEmployee();
+//console.log(employeeArr);
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
