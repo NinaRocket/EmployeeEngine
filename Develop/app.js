@@ -36,10 +36,13 @@ function addEmployee() {
         else if (selectedRole.role === "Intern") {
             newIntern();
         }
-        else {
+        else if (selectedRole.role === "None") {
             console.log("No employee added.");
+            const html = render(employeeArr);
+            console.log(html);
+            fs.writeFile(outputPath, html, (err) => err ? console.log(err) : console.log("Success! You've created a team.html file"));
+            return;
         }
-
     })
 };
 
@@ -154,4 +157,4 @@ addEmployee();
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work! ``

@@ -64,3 +64,4 @@ const replacePlaceholders = (template, placeholder, value) => {
 };
 
 module.exports = render;
+
