@@ -39,7 +39,6 @@ function addEmployee() {
         else if (selectedRole.role === "None") {
             console.log("No employee added.");
             const html = render(employeeArr);
-            console.log(html);
             fs.writeFile(outputPath, html, (err) => err ? console.log(err) : console.log("Success! You've created a team.html file"));
             return;
         }
@@ -108,6 +107,7 @@ function newIntern() {
 };
 
 function newManager() {
+
     return inquirer.prompt([
         {
             type: "input",
@@ -130,6 +130,7 @@ function newManager() {
             message: "Please enter the manager's office number."
         }
     ]).then(data => {
+        const valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email);
         console.log("A manager was added.");
         let manager = new Manager(data.name, data.id, data.email, data.officeNumber);
         employeeArr.push(manager);
